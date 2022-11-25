@@ -1,8 +1,13 @@
 part of 'themes.dart';
 
 final TextTheme lightTextTheme = TextTheme(
-    bodyMedium: TextStyle(
-        fontSize: 18.sp,
-        fontWeight: FontWeight.w600,
+    bodyLarge: TextStyle(
+        fontSize: 30.sp,
+        fontWeight: FontWeight.w700,
         fontFamily: 'SFPro',
-        color: Colors.blue));
+        color: Colors.black),
+    bodyMedium: TextStyle(
+      fontSize: 18.sp,
+      fontWeight: FontWeight.w600,
+      fontFamily: 'SFPro',
+    ));

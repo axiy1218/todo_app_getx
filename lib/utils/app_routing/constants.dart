@@ -1,4 +1,5 @@
 import 'package:get/route_manager.dart';
+import 'package:todo_app_getx/screens/auth/sign_in/sign_in_view.dart';
 import 'package:todo_app_getx/screens/auth/sign_up/sign_up_binding.dart';
 import 'package:todo_app_getx/screens/auth/sign_up/sign_up_view.dart';
 import 'package:todo_app_getx/screens/home/home_binding.dart';
@@ -14,6 +15,10 @@ class AppRouting {
     GetPage(
         name: AppRouteNames.signUp.routeName,
         page: () => const SignUpView(),
+        binding: SignUpBinding()),
+    GetPage(
+        name: AppRouteNames.signIn.routeName,
+        page: () => const SignInView(),
         binding: SignUpBinding()),
   ];
 }
