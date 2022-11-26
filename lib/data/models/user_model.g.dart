@@ -15,6 +15,9 @@ _$_User _$$_UserFromJson(Map<String, dynamic> json) => _$_User(
       userCreatedDate: json['userCreatedDate'] == null
           ? null
           : DateTime.parse(json['userCreatedDate'] as String),
+      taskLists: (json['taskLists'] as List<dynamic>?)
+          ?.map((e) => e as Map<String, dynamic>)
+          .toList(),
     );
 
 Map<String, dynamic> _$$_UserToJson(_$_User instance) => <String, dynamic>{
@@ -24,4 +27,5 @@ Map<String, dynamic> _$$_UserToJson(_$_User instance) => <String, dynamic>{
       'email': instance.email,
       'photoAvatarUrl': instance.photoAvatarUrl,
       'userCreatedDate': instance.userCreatedDate?.toIso8601String(),
+      'taskLists': instance.taskLists,
     };

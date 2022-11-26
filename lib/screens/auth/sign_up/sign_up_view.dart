@@ -127,7 +127,7 @@ class SignUpView extends GetView<SignUpController> {
                           minSize: 40.h,
                           padding: const EdgeInsets.symmetric(horizontal: .0),
                           onPressed: controller.signUp,
-                          child: const Text('sign up')),
+                          child: const Text('Sign Up')),
                     ),
                   ),
                 ),
@@ -146,7 +146,11 @@ class SignUpView extends GetView<SignUpController> {
                           style: Theme.of(context)
                               .textTheme
                               .bodyMedium!
-                              .copyWith(color: Colors.white),
+                              .copyWith(
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge!
+                                      .color),
                         ),
                         TextButton(
                             onPressed: controller.onSignInButtonPressed,

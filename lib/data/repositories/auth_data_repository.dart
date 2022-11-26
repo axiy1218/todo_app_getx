@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:todo_app_getx/data/dataprovider/auth_data_provider.dart';
 
@@ -26,6 +27,7 @@ class AuthDataRepository extends GetxService {
       return User(
           uid: userCredentional!.user!.uid,
           email: email,
+          photoAvatarUrl: '',
           password: password,
           userCreatedDate: DateTime.now(),
           username: username);
@@ -34,5 +36,19 @@ class AuthDataRepository extends GetxService {
       log(s.toString());
     }
     return null;
+  }
+
+  Future<bool> signInRepo(
+      {required String email, required String password}) async {
+    try {
+      final signedIn =
+          await authDataProvider.signIn(email: email, password: password);
+      debugPrint('User signed IN');
+      return signedIn;
+    } catch (e, s) {
+      log(e.toString());
+      log(s.toString());
+    }
+    return false;
   }
 }

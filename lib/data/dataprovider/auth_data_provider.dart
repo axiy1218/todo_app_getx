@@ -25,5 +25,17 @@ class AuthDataProvider extends GetxService {
     return null;
   }
 
+  Future<bool> signIn({required String email, required String password}) async {
+    try {
+      await _auth.signInWithEmailAndPassword(email: email, password: password);
+      debugPrint('User signed IN');
+      return true;
+    } on FirebaseException catch (e, s) {
+      log(e.toString());
+      log(s.toString());
+    }
+    return false;
+  }
+
   FirebaseAuth get auth => _auth;
 }

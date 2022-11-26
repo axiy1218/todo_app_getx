@@ -1,5 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:todo_app_getx/data/repositories/auth_data_repository.dart';
+import 'package:todo_app_getx/utils/app_routing/app_route_names.dart';
 
 abstract class SignInControllerRepository {
   void checkEmail(String? value);
@@ -13,6 +17,7 @@ class SignInController extends GetxController
     implements SignInControllerRepository {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController password = TextEditingController();
+  final AuthDataRepository _authDataRepository = Get.find<AuthDataRepository>();
   bool? isObscure = true;
   @override
   void checkEmail(String? value) {
@@ -41,7 +46,20 @@ class SignInController extends GetxController
   }
 
   @override
-  void signIn() {}
+  void signIn() async {
+    try {
+      if (password.text.isEmpty || emailController.text.isEmpty) return;
+      final signedIn = await _authDataRepository.signInRepo(
+          email: emailController.text.trim(), password: password.text.trim());
+      if (signedIn) {
+        Get.snackbar('auth', 'Success');
+        Get.toNamed(AppRouteNames.home.routeName);
+      }
+    } catch (e, s) {
+      log(e.toString());
+      log(s.toString());
+    }
+  }
 
   @override
   void onSignUpButtonPressed() {

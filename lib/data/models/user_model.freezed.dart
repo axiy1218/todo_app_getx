@@ -26,6 +26,8 @@ mixin _$User {
   String? get email => throw _privateConstructorUsedError;
   String? get photoAvatarUrl => throw _privateConstructorUsedError;
   DateTime? get userCreatedDate => throw _privateConstructorUsedError;
+  List<Map<String, dynamic>>? get taskLists =>
+      throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -43,7 +45,8 @@ abstract class $UserCopyWith<$Res> {
       String? password,
       String? email,
       String? photoAvatarUrl,
-      DateTime? userCreatedDate});
+      DateTime? userCreatedDate,
+      List<Map<String, dynamic>>? taskLists});
 }
 
 /// @nodoc
@@ -65,6 +68,7 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
     Object? email = freezed,
     Object? photoAvatarUrl = freezed,
     Object? userCreatedDate = freezed,
+    Object? taskLists = freezed,
   }) {
     return _then(_value.copyWith(
       uid: freezed == uid
@@ -91,6 +95,10 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.userCreatedDate
           : userCreatedDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      taskLists: freezed == taskLists
+          ? _value.taskLists
+          : taskLists // ignore: cast_nullable_to_non_nullable
+              as List<Map<String, dynamic>>?,
     ) as $Val);
   }
 }
@@ -107,7 +115,8 @@ abstract class _$$_UserCopyWith<$Res> implements $UserCopyWith<$Res> {
       String? password,
       String? email,
       String? photoAvatarUrl,
-      DateTime? userCreatedDate});
+      DateTime? userCreatedDate,
+      List<Map<String, dynamic>>? taskLists});
 }
 
 /// @nodoc
@@ -125,6 +134,7 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
     Object? email = freezed,
     Object? photoAvatarUrl = freezed,
     Object? userCreatedDate = freezed,
+    Object? taskLists = freezed,
   }) {
     return _then(_$_User(
       uid: freezed == uid
@@ -151,6 +161,10 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
           ? _value.userCreatedDate
           : userCreatedDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      taskLists: freezed == taskLists
+          ? _value._taskLists
+          : taskLists // ignore: cast_nullable_to_non_nullable
+              as List<Map<String, dynamic>>?,
     ));
   }
 }
@@ -164,7 +178,9 @@ class _$_User implements _User {
       this.password,
       this.email,
       this.photoAvatarUrl,
-      this.userCreatedDate});
+      this.userCreatedDate,
+      final List<Map<String, dynamic>>? taskLists})
+      : _taskLists = taskLists;
 
   factory _$_User.fromJson(Map<String, dynamic> json) => _$$_UserFromJson(json);
 
@@ -180,10 +196,18 @@ class _$_User implements _User {
   final String? photoAvatarUrl;
   @override
   final DateTime? userCreatedDate;
+  final List<Map<String, dynamic>>? _taskLists;
+  @override
+  List<Map<String, dynamic>>? get taskLists {
+    final value = _taskLists;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
-    return 'User(uid: $uid, username: $username, password: $password, email: $email, photoAvatarUrl: $photoAvatarUrl, userCreatedDate: $userCreatedDate)';
+    return 'User(uid: $uid, username: $username, password: $password, email: $email, photoAvatarUrl: $photoAvatarUrl, userCreatedDate: $userCreatedDate, taskLists: $taskLists)';
   }
 
   @override
@@ -200,13 +224,22 @@ class _$_User implements _User {
             (identical(other.photoAvatarUrl, photoAvatarUrl) ||
                 other.photoAvatarUrl == photoAvatarUrl) &&
             (identical(other.userCreatedDate, userCreatedDate) ||
-                other.userCreatedDate == userCreatedDate));
+                other.userCreatedDate == userCreatedDate) &&
+            const DeepCollectionEquality()
+                .equals(other._taskLists, _taskLists));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, uid, username, password, email,
-      photoAvatarUrl, userCreatedDate);
+  int get hashCode => Object.hash(
+      runtimeType,
+      uid,
+      username,
+      password,
+      email,
+      photoAvatarUrl,
+      userCreatedDate,
+      const DeepCollectionEquality().hash(_taskLists));
 
   @JsonKey(ignore: true)
   @override
@@ -229,7 +262,8 @@ abstract class _User implements User {
       final String? password,
       final String? email,
       final String? photoAvatarUrl,
-      final DateTime? userCreatedDate}) = _$_User;
+      final DateTime? userCreatedDate,
+      final List<Map<String, dynamic>>? taskLists}) = _$_User;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$_User.fromJson;
 
@@ -245,6 +279,8 @@ abstract class _User implements User {
   String? get photoAvatarUrl;
   @override
   DateTime? get userCreatedDate;
+  @override
+  List<Map<String, dynamic>>? get taskLists;
   @override
   @JsonKey(ignore: true)
   _$$_UserCopyWith<_$_User> get copyWith => throw _privateConstructorUsedError;

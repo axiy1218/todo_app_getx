@@ -2,7 +2,10 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:todo_app_getx/data/models/task_list_model.dart';
+import 'package:todo_app_getx/data/models/user_model.dart';
 import 'package:todo_app_getx/data/repositories/auth_data_repository.dart';
+import 'package:todo_app_getx/data/repositories/fire_data_repository.dart';
 import 'package:todo_app_getx/utils/app_routing/app_route_names.dart';
 
 abstract class SignUpControllerRepository {
@@ -21,6 +24,7 @@ class SignUpController extends GetxController
   final TextEditingController password = TextEditingController();
   final TextEditingController confirmPassword = TextEditingController();
   final AuthDataRepository authRepo = Get.find<AuthDataRepository>();
+  final FireDataRepository firestoreDb = Get.find<FireDataRepository>();
   bool? isObscure = true;
   @override
   void checkEmail(String? value) {
@@ -69,11 +73,31 @@ class SignUpController extends GetxController
           email: emailController.text,
           username: username.text,
           password: password.text);
-      if (user != null && user.uid != null) {
-        Get.snackbar('success', 'Siz muvofaqqiyatli royxatdan otdingiz');
+      final newUser = user!.copyWith(taskLists: [
+        TaskBaseModel(
+                id: 'task000',
+                name: 'important',
+                publishDate: DateTime.now(),
+                userId: user.uid)
+            .toJson(),
+        TaskBaseModel(
+                id: 'task111',
+                name: 'tasks',
+                publishDate: DateTime.now(),
+                userId: user.uid)
+            .toJson(),
+      ]);
+      if (newUser.uid != null) {
+        final savedToDb = await firestoreDb.createDataCollectionRepo<User>(
+            data: newUser, collectionName: 'users', id: newUser.uid);
+        if (savedToDb) {
+          Get.snackbar('success', 'Siz muvofaqqiyatli royxatdan otdingiz');
+          Get.toNamed(AppRouteNames.home.routeName);
+        }
       }
-    } catch (e) {
+    } catch (e, s) {
       log(e.toString());
+      log(s.toString());
     }
   }
 

@@ -86,7 +86,7 @@ class SignInView extends GetView<SignInController> {
                       child: CupertinoButton.filled(
                           minSize: 40.h,
                           padding: const EdgeInsets.symmetric(horizontal: .0),
-                          onPressed: () {},
+                          onPressed: controller.signIn,
                           child: const Text('Sign In')),
                     ),
                   ),
@@ -106,7 +106,11 @@ class SignInView extends GetView<SignInController> {
                           style: Theme.of(context)
                               .textTheme
                               .bodyMedium!
-                              .copyWith(color: Colors.white),
+                              .copyWith(
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge!
+                                      .color),
                         ),
                         TextButton(
                             onPressed: controller.onSignUpButtonPressed,
