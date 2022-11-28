@@ -53,6 +53,8 @@ class SignInController extends GetxController
           email: emailController.text.trim(), password: password.text.trim());
       if (signedIn) {
         Get.snackbar('auth', 'Success');
+        emailController.clear();
+        password.clear();
         Get.toNamed(AppRouteNames.home.routeName);
       }
     } catch (e, s) {

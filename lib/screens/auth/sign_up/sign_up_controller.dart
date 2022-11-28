@@ -92,6 +92,10 @@ class SignUpController extends GetxController
             data: newUser, collectionName: 'users', id: newUser.uid);
         if (savedToDb) {
           Get.snackbar('success', 'Siz muvofaqqiyatli royxatdan otdingiz');
+          emailController.clear();
+          password.clear();
+          confirmPassword.clear();
+          username.clear();
           Get.toNamed(AppRouteNames.home.routeName);
         }
       }

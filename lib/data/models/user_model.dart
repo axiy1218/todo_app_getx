@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:todo_app_getx/data/models/base_model.dart';
 
@@ -17,4 +18,10 @@ class User with _$User implements BaseModel {
   }) = _User;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+
+  factory User.fromDocumentSnapshot(
+      DocumentSnapshot<Map<String, dynamic>> snapshot) {
+    final Map<String, dynamic> data = snapshot.data()!;
+    return User.fromJson(data);
+  }
 }
