@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +15,7 @@ class HomeView extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
+    log('BUILLLLLLDD');
     return Scaffold(
       // appBar: AppBar(
       //   automaticallyImplyLeading: false,
@@ -88,16 +91,20 @@ class HomeView extends GetView<HomeController> {
                                       icon: const Icon(Icons.search)),
                                 ),
                               ),
-                              _CustomCard(
-                                  task: important,
-                                  onTap: () {},
-                                  icon: const Icon(
-                                    Icons.star,
-                                    color: Colors.red,
-                                  )),
+                              GetBuilder(
+                                  init: controller,
+                                  builder: (_) {
+                                    return _CustomCard(
+                                        task: important,
+                                        onTap: controller.onImportantPressed,
+                                        icon: const Icon(
+                                          Icons.star,
+                                          color: Colors.red,
+                                        ));
+                                  }),
                               _CustomCard(
                                   task: tasks,
-                                  onTap: () {},
+                                  onTap: controller.onTasksPressed,
                                   icon: Icon(
                                     Icons.house_siding,
                                     color: Theme.of(context).primaryColor,
@@ -148,7 +155,8 @@ class HomeView extends GetView<HomeController> {
                                     TaskBaseModel.fromJson(filteredList[index]);
                                 return _CustomCard(
                                     task: task,
-                                    onTap: () {},
+                                    onTap: () => controller.onListTilePressed(
+                                        taskBase: task),
                                     icon: Icon(
                                       Icons.menu,
                                       color: Theme.of(context).primaryColor,
@@ -165,7 +173,10 @@ class HomeView extends GetView<HomeController> {
       floatingActionButton: Builder(builder: (context) {
         return FloatingActionButton.extended(
             icon: const Icon(Icons.add),
-            onPressed: () => controller.showCustomDiolog(context),
+            onPressed: () {
+              context.light;
+              controller.showCustomDiolog(context);
+            },
             elevation: .0,
             backgroundColor: Theme.of(context).splashColor,
             foregroundColor: Theme.of(context).primaryColor,

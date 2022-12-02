@@ -1,16 +1,20 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:todo_app_getx/data/dataprovider/auth_data_provider.dart';
 import 'package:todo_app_getx/data/dataprovider/fire_data_provider.dart';
 import 'package:todo_app_getx/data/models/task_list_model.dart';
+import 'package:todo_app_getx/screens/widgets/custom_dialog_widget.dart';
+import 'package:todo_app_getx/utils/app_routing/app_route_names.dart';
 import 'package:uuid/uuid.dart';
 
 abstract class HomeRepository {
   Future<void> createTaskList();
+  void onImportantPressed();
   void showCustomDiolog(BuildContext context);
+  void onTasksPressed();
+  void onListTilePressed({required TaskBaseModel taskBase});
 }
 
 class HomeController extends GetxController implements HomeRepository {
@@ -35,7 +39,8 @@ class HomeController extends GetxController implements HomeRepository {
               publishDate: DateTime.now()));
 
       if (listSaved) {
-        Get.snackbar('new list', 'Task list created');
+        Get.snackbar('New list', 'Task list created');
+        taskListController.clear();
         update();
       }
     } catch (e, s) {
@@ -50,57 +55,35 @@ class HomeController extends GetxController implements HomeRepository {
         context: context,
         barrierDismissible: true,
         builder: (context) {
-          return AlertDialog(
-            buttonPadding: EdgeInsets.symmetric(horizontal: 10.w, vertical: .0),
-            contentPadding:
-                EdgeInsets.symmetric(horizontal: 24.w, vertical: 5.h),
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(28.w)),
-            title: const Text('New list'),
-            content: TextField(
+          return CustomDialogWidget(
               controller: taskListController,
-              decoration: InputDecoration(
-                  hintText: 'Enter list title',
-                  hintStyle: Theme.of(context)
-                      .textTheme
-                      .bodySmall!
-                      .copyWith(fontSize: 16.sp),
-                  filled: true,
-                  fillColor: const Color(0xFFFAF9FB),
-                  border: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                          width: 2.h, color: const Color(0xFFA9A8AA)))),
-            ),
-            actions: [
-              ButtonBar(
-                children: [
-                  TextButton(
-                      onPressed: Get.back,
-                      child: Text(
-                        'cancel',
-                        style: Theme.of(context).textTheme.bodySmall,
-                      )),
-                  ElevatedButton.icon(
-                      icon: const Icon(Icons.add),
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: Theme.of(context).primaryColor,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20.w))),
-                      onPressed: () {
-                        createTaskList();
-                        Get.back();
-                      },
-                      label: Text(
-                        'Add',
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodySmall!
-                            .copyWith(color: Colors.white),
-                      )),
-                ],
-              )
-            ],
-          );
+              placeholder: 'Enter list title',
+              dialogName: 'New List',
+              onConfirmed: () {
+                createTaskList();
+                Get.back();
+              },
+              hasIcon: true,
+              buttonName: 'Add');
         });
+  }
+
+  @override
+  void onImportantPressed() {
+    Get.toNamed(AppRouteNames.important.routeName);
+    update();
+  }
+
+  @override
+  void onTasksPressed() {
+    Get.toNamed(AppRouteNames.complated.routeName);
+    update();
+  }
+
+  @override
+  void onListTilePressed({required TaskBaseModel taskBase}) {
+    Get.toNamed(AppRouteNames.taskListPage.routeName,
+        arguments: {'task_base': taskBase.toJson()});
+    update();
   }
 }
