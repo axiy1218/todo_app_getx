@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:todo_app_getx/data/dataprovider/auth_data_provider.dart';
 import 'package:todo_app_getx/data/dataprovider/fire_data_provider.dart';
 import 'package:todo_app_getx/data/models/task_list_model.dart';
@@ -21,6 +22,8 @@ class HomeController extends GetxController implements HomeRepository {
   final FireDataProvider fireDataProvider = Get.find<FireDataProvider>();
   final AuthDataProvider auth = Get.find<AuthDataProvider>();
   final TextEditingController taskListController = TextEditingController();
+
+  final box = GetStorage();
   void changeTheme() {
     update();
   }
@@ -70,20 +73,22 @@ class HomeController extends GetxController implements HomeRepository {
 
   @override
   void onImportantPressed() {
-    Get.toNamed(AppRouteNames.important.routeName);
+    Get.toNamed(AppRouteNames.important.route);
     update();
   }
 
   @override
   void onTasksPressed() {
-    Get.toNamed(AppRouteNames.complated.routeName);
+    Get.toNamed(AppRouteNames.complated.route);
     update();
   }
 
   @override
-  void onListTilePressed({required TaskBaseModel taskBase}) {
-    Get.toNamed(AppRouteNames.taskListPage.routeName,
-        arguments: {'task_base': taskBase.toJson()});
+  void onListTilePressed({required TaskBaseModel taskBase}) async {
+    Get.toNamed(
+      AppRouteNames.taskListPage.route,
+    );
+    await box.write('task_base', taskBase.toJson());
     update();
   }
 }

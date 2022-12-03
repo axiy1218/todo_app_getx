@@ -23,6 +23,7 @@ mixin _$Task {
   String? get id => throw _privateConstructorUsedError;
   String? get userId => throw _privateConstructorUsedError;
   String? get task => throw _privateConstructorUsedError;
+  String? get note => throw _privateConstructorUsedError;
   bool? get isCompleted => throw _privateConstructorUsedError;
   bool? get isFavourite => throw _privateConstructorUsedError;
   DateTime? get publishedDate => throw _privateConstructorUsedError;
@@ -43,6 +44,7 @@ abstract class $TaskCopyWith<$Res> {
       {String? id,
       String? userId,
       String? task,
+      String? note,
       bool? isCompleted,
       bool? isFavourite,
       DateTime? publishedDate,
@@ -66,6 +68,7 @@ class _$TaskCopyWithImpl<$Res, $Val extends Task>
     Object? id = freezed,
     Object? userId = freezed,
     Object? task = freezed,
+    Object? note = freezed,
     Object? isCompleted = freezed,
     Object? isFavourite = freezed,
     Object? publishedDate = freezed,
@@ -84,6 +87,10 @@ class _$TaskCopyWithImpl<$Res, $Val extends Task>
       task: freezed == task
           ? _value.task
           : task // ignore: cast_nullable_to_non_nullable
+              as String?,
+      note: freezed == note
+          ? _value.note
+          : note // ignore: cast_nullable_to_non_nullable
               as String?,
       isCompleted: freezed == isCompleted
           ? _value.isCompleted
@@ -119,6 +126,7 @@ abstract class _$$_TaskCopyWith<$Res> implements $TaskCopyWith<$Res> {
       {String? id,
       String? userId,
       String? task,
+      String? note,
       bool? isCompleted,
       bool? isFavourite,
       DateTime? publishedDate,
@@ -138,6 +146,7 @@ class __$$_TaskCopyWithImpl<$Res> extends _$TaskCopyWithImpl<$Res, _$_Task>
     Object? id = freezed,
     Object? userId = freezed,
     Object? task = freezed,
+    Object? note = freezed,
     Object? isCompleted = freezed,
     Object? isFavourite = freezed,
     Object? publishedDate = freezed,
@@ -156,6 +165,10 @@ class __$$_TaskCopyWithImpl<$Res> extends _$TaskCopyWithImpl<$Res, _$_Task>
       task: freezed == task
           ? _value.task
           : task // ignore: cast_nullable_to_non_nullable
+              as String?,
+      note: freezed == note
+          ? _value.note
+          : note // ignore: cast_nullable_to_non_nullable
               as String?,
       isCompleted: freezed == isCompleted
           ? _value.isCompleted
@@ -188,6 +201,7 @@ class _$_Task implements _Task {
       {this.id,
       this.userId,
       this.task,
+      this.note,
       this.isCompleted,
       this.isFavourite,
       this.publishedDate,
@@ -203,6 +217,8 @@ class _$_Task implements _Task {
   @override
   final String? task;
   @override
+  final String? note;
+  @override
   final bool? isCompleted;
   @override
   final bool? isFavourite;
@@ -215,7 +231,7 @@ class _$_Task implements _Task {
 
   @override
   String toString() {
-    return 'Task(id: $id, userId: $userId, task: $task, isCompleted: $isCompleted, isFavourite: $isFavourite, publishedDate: $publishedDate, taskListId: $taskListId, taskListName: $taskListName)';
+    return 'Task(id: $id, userId: $userId, task: $task, note: $note, isCompleted: $isCompleted, isFavourite: $isFavourite, publishedDate: $publishedDate, taskListId: $taskListId, taskListName: $taskListName)';
   }
 
   @override
@@ -226,6 +242,7 @@ class _$_Task implements _Task {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.task, task) || other.task == task) &&
+            (identical(other.note, note) || other.note == note) &&
             (identical(other.isCompleted, isCompleted) ||
                 other.isCompleted == isCompleted) &&
             (identical(other.isFavourite, isFavourite) ||
@@ -240,8 +257,8 @@ class _$_Task implements _Task {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, userId, task, isCompleted,
-      isFavourite, publishedDate, taskListId, taskListName);
+  int get hashCode => Object.hash(runtimeType, id, userId, task, note,
+      isCompleted, isFavourite, publishedDate, taskListId, taskListName);
 
   @JsonKey(ignore: true)
   @override
@@ -262,6 +279,7 @@ abstract class _Task implements Task {
       {final String? id,
       final String? userId,
       final String? task,
+      final String? note,
       final bool? isCompleted,
       final bool? isFavourite,
       final DateTime? publishedDate,
@@ -276,6 +294,8 @@ abstract class _Task implements Task {
   String? get userId;
   @override
   String? get task;
+  @override
+  String? get note;
   @override
   bool? get isCompleted;
   @override

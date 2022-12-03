@@ -84,8 +84,7 @@ class HomeView extends GetView<HomeController> {
                                   ),
                                   trailing: IconButton(
                                       onPressed: () {
-                                        Get.toNamed(
-                                            AppRouteNames.search.routeName);
+                                        Get.toNamed(AppRouteNames.search.route);
                                       },
                                       padding: EdgeInsets.zero,
                                       icon: const Icon(Icons.search)),
@@ -170,18 +169,20 @@ class HomeView extends GetView<HomeController> {
       ),
       backgroundColor: Theme.of(context).splashColor,
       floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
-      floatingActionButton: Builder(builder: (context) {
-        return FloatingActionButton.extended(
-            icon: const Icon(Icons.add),
-            onPressed: () {
-              context.light;
-              controller.showCustomDiolog(context);
-            },
-            elevation: .0,
-            backgroundColor: Theme.of(context).splashColor,
-            foregroundColor: Theme.of(context).primaryColor,
-            label: const Text('New List'));
-      }),
+      floatingActionButton: GetBuilder(
+          init: controller,
+          builder: (_) {
+            return FloatingActionButton.extended(
+                icon: const Icon(Icons.add),
+                onPressed: () {
+                  context.light;
+                  controller.showCustomDiolog(context);
+                },
+                elevation: .0,
+                backgroundColor: Theme.of(context).splashColor,
+                foregroundColor: Theme.of(context).primaryColor,
+                label: const Text('New List'));
+          }),
     );
   }
 }

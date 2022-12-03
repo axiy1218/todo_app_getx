@@ -10,6 +10,7 @@ class Task with _$Task implements BaseModel {
       {String? id,
       String? userId,
       String? task,
+      String? note,
       bool? isCompleted,
       bool? isFavourite,
       DateTime? publishedDate,

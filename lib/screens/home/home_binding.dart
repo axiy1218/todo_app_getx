@@ -6,6 +6,7 @@ import 'package:todo_app_getx/screens/home/home_controller.dart';
 import 'package:todo_app_getx/screens/important/important_controller.dart';
 import 'package:todo_app_getx/screens/search/search_controller.dart';
 import 'package:todo_app_getx/screens/task_list_page/task_list_controller.dart';
+import 'package:todo_app_getx/screens/task_list_page/task_list_view/task_list_view_controller.dart';
 
 class HomeBinding extends Bindings {
   @override
@@ -17,5 +18,6 @@ class HomeBinding extends Bindings {
     Get.lazyPut<ImportantController>(() => ImportantController());
     Get.lazyPut<ComplatedController>(() => ComplatedController());
     Get.lazyPut<TaskListController>(() => TaskListController());
+    Get.lazyPut<TaskListViewController>(() => TaskListViewController());
   }
 }

@@ -96,7 +96,7 @@ class SignUpController extends GetxController
           password.clear();
           confirmPassword.clear();
           username.clear();
-          Get.toNamed(AppRouteNames.home.routeName);
+          Get.toNamed(AppRouteNames.home.route);
         }
       }
     } catch (e, s) {
@@ -107,6 +107,6 @@ class SignUpController extends GetxController
 
   @override
   void onSignInButtonPressed() {
-    Get.toNamed(AppRouteNames.signIn.routeName);
+    Get.toNamed(AppRouteNames.signIn.route);
   }
 }

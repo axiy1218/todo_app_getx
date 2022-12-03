@@ -5,8 +5,9 @@ enum AppRouteNames {
   important('/important'),
   complated('/complated'),
   taskListPage('/task_list_page'),
+  taskListView('/task_list_view'),
   home('/home');
 
-  final String routeName;
-  const AppRouteNames(this.routeName);
+  final String route;
+  const AppRouteNames(this.route);
 }

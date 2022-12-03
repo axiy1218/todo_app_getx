@@ -20,18 +20,18 @@ class ImportantView extends GetView<ImportantController> {
         backgroundColor: Colors.transparent,
       ),
       body: Column(
-        children: [
-          Padding(
-              padding: EdgeInsets.all(20.w),
-              child: CustomSliderWidget(
-                sliderKey: 'first',
-                onValueChanged: (p0) {},
-                time: 'Today',
-                title: 'To do',
-                isComplated: true,
-                isFavourite: true,
-                onDeletePressed: (context) {},
-              ))
+        children: const [
+          // Padding(
+          //     padding: EdgeInsets.all(20.w),
+          //     child: CustomSliderWidget(
+          //       sliderKey: 'first',
+          //       onValueChanged: (p0) {},
+          //       time: 'Today',
+          //       title: 'To do',
+          //       isComplated: true,
+          //       isFavourite: true,
+          //       onDeletePressed: (context) {},
+          //     ))
         ],
       ),
     );

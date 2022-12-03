@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
-typedef _CustomValueChanged<T> = void Function(T?);
+typedef CustomValueChanged<T> = void Function(T?);
 
 class CustomSliderWidget extends StatelessWidget {
   final String sliderKey;
@@ -11,7 +11,8 @@ class CustomSliderWidget extends StatelessWidget {
   final bool isFavourite;
   final String title;
   final String time;
-  final _CustomValueChanged<bool> onValueChanged;
+  final VoidCallback onTapFavoirite;
+  final CustomValueChanged<bool> onValueChanged;
   const CustomSliderWidget(
       {super.key,
       required this.sliderKey,
@@ -20,7 +21,8 @@ class CustomSliderWidget extends StatelessWidget {
       required this.isFavourite,
       required this.title,
       required this.time,
-      required this.onValueChanged});
+      required this.onValueChanged,
+      required this.onTapFavoirite});
 
   @override
   Widget build(BuildContext context) {
@@ -48,12 +50,16 @@ class CustomSliderWidget extends StatelessWidget {
               title: Text(title),
               subtitle: Text(time),
               controlAffinity: ListTileControlAffinity.leading,
-              secondary: isFavourite
-                  ? const Icon(
-                      Icons.star,
-                      color: Colors.yellow,
-                    )
-                  : const Icon(Icons.star_border),
+              secondary: IconButton(
+                onPressed: onTapFavoirite,
+                padding: EdgeInsets.zero,
+                icon: isFavourite
+                    ? const Icon(
+                        Icons.star,
+                        color: Colors.yellow,
+                      )
+                    : const Icon(Icons.star_border),
+              ),
               onChanged: onValueChanged,
             ),
           ),

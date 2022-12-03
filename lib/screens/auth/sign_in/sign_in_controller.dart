@@ -55,7 +55,7 @@ class SignInController extends GetxController
         Get.snackbar('auth', 'Success');
         emailController.clear();
         password.clear();
-        Get.toNamed(AppRouteNames.home.routeName);
+        Get.toNamed(AppRouteNames.home.route);
       }
     } catch (e, s) {
       log(e.toString());
