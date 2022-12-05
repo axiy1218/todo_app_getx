@@ -6,6 +6,7 @@ enum AppRouteNames {
   complated('/complated'),
   taskListPage('/task_list_page'),
   taskListView('/task_list_view'),
+  profile('/profile'),
   home('/home');
 
   final String route;

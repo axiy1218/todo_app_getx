@@ -7,6 +7,7 @@ import 'package:todo_app_getx/data/dataprovider/auth_data_provider.dart';
 import 'package:todo_app_getx/data/dataprovider/fire_data_provider.dart';
 import 'package:todo_app_getx/data/models/task.dart';
 import 'package:todo_app_getx/data/models/task_list_model.dart';
+import 'package:todo_app_getx/utils/app_routing/constants.dart';
 import 'package:uuid/uuid.dart';
 
 class TaskListController extends GetxController {
@@ -17,13 +18,13 @@ class TaskListController extends GetxController {
   final _firstoreProvider = Get.find<FireDataProvider>();
   final _fireAuth = Get.find<AuthDataProvider>();
   bool? _isComplated = false;
-
+  final arguments = Get.arguments;
   final box = GetStorage();
 
   @override
   void onInit() {
     isButton = true;
-    _taskBase = TaskBaseModel.fromJson(box.read('task_base'));
+    _taskBase = TaskBaseModel.fromJson(arguments['task_base']);
     update();
     super.onInit();
   }
@@ -57,10 +58,14 @@ class TaskListController extends GetxController {
           publishedDate: DateTime.now(),
           taskListId: taskBase.id,
           taskListName: taskBase.name);
-      final isSavedToDb = await _firstoreProvider.createTask(task: task);
+      final isSavedToDb = await _firstoreProvider.createTask(
+          task: task,
+          collectionName: CollectionNames.generateSimpleTaskCollectionName(
+              name: task.taskListName!, id: task.taskListId!));
       if (_isComplated!) {
-        final isComplatedSaved =
-            await _firstoreProvider.createTaskComplated(task: task);
+        final isComplatedSaved = await _firstoreProvider.createTask(
+            task: task,
+            collectionName: CollectionNames.complatedCollectionName);
         if (isComplatedSaved) {
           log('task Complated-------');
         }

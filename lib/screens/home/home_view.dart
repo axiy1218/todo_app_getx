@@ -1,14 +1,14 @@
 import 'dart:developer';
 
-import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:todo_app_getx/data/models/task_list_model.dart';
-import 'package:todo_app_getx/data/models/user_model.dart';
 import 'package:todo_app_getx/screens/home/home_controller.dart';
 import 'package:todo_app_getx/utils/app_routing/app_route_names.dart';
+
+import '../../data/models/user_model.dart';
 
 class HomeView extends GetView<HomeController> {
   const HomeView({super.key});
@@ -65,31 +65,46 @@ class HomeView extends GetView<HomeController> {
                               TaskBaseModel.fromJson(user.taskLists![1]);
                           return Column(
                             children: [
-                              Card(
-                                elevation: .0,
-                                margin: EdgeInsets.zero,
-                                child: ListTile(
-                                  leading: CircleAvatar(
-                                    child: Text(user.email![0]),
-                                  ),
-                                  title: Text(
-                                    user.email ?? 'example@gmail.com',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyMedium!
-                                        .copyWith(
-                                            fontFamily: 'Roboto',
-                                            fontSize: 16.sp,
-                                            fontWeight: FontWeight.w600),
-                                  ),
-                                  trailing: IconButton(
-                                      onPressed: () {
-                                        Get.toNamed(AppRouteNames.search.route);
-                                      },
-                                      padding: EdgeInsets.zero,
-                                      icon: const Icon(Icons.search)),
-                                ),
-                              ),
+                              GetBuilder(
+                                  init: controller,
+                                  builder: (_) {
+                                    return Card(
+                                      elevation: .0,
+                                      margin: EdgeInsets.zero,
+                                      color: Colors.transparent,
+                                      child: ListTile(
+                                        onTap: controller.onEmailPressed,
+                                        leading: CircleAvatar(
+                                          child: Text(user.email![0]),
+                                        ),
+                                        title: Text(
+                                          user.email ?? 'example@gmail.com',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium!
+                                              .copyWith(
+                                                  fontFamily: 'Roboto',
+                                                  fontSize: 16.sp,
+                                                  color: Theme.of(context)
+                                                      .iconTheme
+                                                      .color,
+                                                  fontWeight: FontWeight.w600),
+                                        ),
+                                        trailing: IconButton(
+                                            onPressed: () {
+                                              Get.toNamed(
+                                                  AppRouteNames.search.route);
+                                            },
+                                            padding: EdgeInsets.zero,
+                                            icon: Icon(
+                                              Icons.search,
+                                              color: Theme.of(context)
+                                                  .iconTheme
+                                                  .color,
+                                            )),
+                                      ),
+                                    );
+                                  }),
                               GetBuilder(
                                   init: controller,
                                   builder: (_) {
@@ -174,8 +189,9 @@ class HomeView extends GetView<HomeController> {
           builder: (_) {
             return FloatingActionButton.extended(
                 icon: const Icon(Icons.add),
-                onPressed: () {
-                  context.light;
+                onPressed: () async {
+                  // await FirebaseAuth.instance.signOut();
+
                   controller.showCustomDiolog(context);
                 },
                 elevation: .0,
@@ -199,6 +215,7 @@ class _CustomCard extends StatelessWidget {
     return Card(
       elevation: .0,
       margin: EdgeInsets.zero,
+      color: Colors.transparent,
       child: ListTile(
         onTap: onTap,
         leading: icon,
@@ -207,35 +224,17 @@ class _CustomCard extends StatelessWidget {
           style: Theme.of(context).textTheme.bodyMedium!.copyWith(
               fontFamily: 'Roboto',
               fontSize: 16.sp,
+              color: Theme.of(context).iconTheme.color,
               fontWeight: FontWeight.w600),
         ),
         trailing: IconButton(
             onPressed: () {},
             padding: EdgeInsets.zero,
-            icon: const Icon(Icons.chevron_right)),
+            icon: Icon(
+              Icons.chevron_right,
+              color: Theme.of(context).iconTheme.color,
+            )),
       ),
     );
-  }
-}
-
-extension on BuildContext {
-  get light {
-    AdaptiveTheme.of(this).setLight();
-  }
-
-  get dark {
-    AdaptiveTheme.of(this).setDark();
-  }
-
-  ThemeData get theme {
-    return AdaptiveTheme.of(this).theme;
-  }
-
-  get changeTheme {
-    if (AdaptiveTheme.of(this).mode == AdaptiveThemeMode.dark) {
-      light;
-    } else {
-      dark;
-    }
   }
 }

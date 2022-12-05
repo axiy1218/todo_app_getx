@@ -16,6 +16,8 @@ abstract class HomeRepository {
   void showCustomDiolog(BuildContext context);
   void onTasksPressed();
   void onListTilePressed({required TaskBaseModel taskBase});
+
+  void onEmailPressed();
 }
 
 class HomeController extends GetxController implements HomeRepository {
@@ -85,10 +87,13 @@ class HomeController extends GetxController implements HomeRepository {
 
   @override
   void onListTilePressed({required TaskBaseModel taskBase}) async {
-    Get.toNamed(
-      AppRouteNames.taskListPage.route,
-    );
-    await box.write('task_base', taskBase.toJson());
+    Get.toNamed(AppRouteNames.taskListPage.route,
+        arguments: {'task_base': taskBase.toJson()});
     update();
+  }
+
+  @override
+  void onEmailPressed() {
+    Get.toNamed(AppRouteNames.profile.route);
   }
 }

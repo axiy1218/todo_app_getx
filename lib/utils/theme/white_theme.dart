@@ -6,6 +6,16 @@ final TextTheme lightTextTheme = TextTheme(
       fontWeight: FontWeight.w700,
       fontFamily: 'SFPro',
       color: Colors.black),
+  displayMedium: TextStyle(
+      fontSize: 22.sp,
+      fontWeight: FontWeight.w400,
+      fontFamily: 'Roboto',
+      color: Colors.black),
+  displaySmall: TextStyle(
+      fontSize: 14.sp,
+      fontWeight: FontWeight.w500,
+      fontFamily: 'Roboto',
+      color: Colors.black),
   bodyMedium: TextStyle(
     fontSize: 18.sp,
     fontWeight: FontWeight.w600,

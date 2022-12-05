@@ -5,7 +5,6 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:todo_app_getx/data/models/base_model.dart';
 import 'package:todo_app_getx/data/models/task.dart';
 import 'package:todo_app_getx/data/models/task_list_model.dart';
-import 'package:todo_app_getx/utils/app_routing/constants.dart';
 
 class FireDataProvider extends GetxService {
   late final FirebaseFirestore? _firestore;
@@ -46,12 +45,13 @@ class FireDataProvider extends GetxService {
     return false;
   }
 
-  Future<bool> createTask({required Task task}) async {
+  Future<bool> createTask(
+      {required Task task, required String collectionName}) async {
     try {
       _firestore!
           .collection('users')
           .doc(task.userId)
-          .collection('${task.taskListName}_${task.taskListId}')
+          .collection(collectionName)
           .doc(task.id)
           .set(task.toJson());
       return true;
@@ -60,29 +60,15 @@ class FireDataProvider extends GetxService {
     }
     return false;
   }
+//'${task.taskListName}_${task.taskListId}'
 
-  Future<bool> createTaskComplated({required Task task}) async {
+  Future<bool> updateTask(
+      {required Task task, required String collectionName}) async {
     try {
       _firestore!
           .collection('users')
           .doc(task.userId)
-          .collection(
-              '${TaskListEnum.complated.name}_${TaskListEnum.complated.id}')
-          .doc(task.id)
-          .set(task.toJson());
-      return true;
-    } catch (e) {
-      log(e.toString());
-    }
-    return false;
-  }
-
-  Future<bool> updateTask({required Task task}) async {
-    try {
-      _firestore!
-          .collection('users')
-          .doc(task.userId)
-          .collection('${task.taskListName}_${task.taskListId}')
+          .collection(collectionName)
           .doc(task.id)
           .update(task.toJson());
       return true;
@@ -92,12 +78,13 @@ class FireDataProvider extends GetxService {
     return false;
   }
 
-  Future<bool> deleteTask({required Task task}) async {
+  Future<bool> deleteTask(
+      {required Task task, required String collectionName}) async {
     try {
       _firestore!
           .collection('users')
           .doc(task.userId)
-          .collection('${task.taskListName}_${task.taskListId}')
+          .collection(collectionName)
           .doc(task.id)
           .delete();
       return true;

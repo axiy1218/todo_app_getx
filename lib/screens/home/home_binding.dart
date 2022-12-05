@@ -1,4 +1,5 @@
 import 'package:get/instance_manager.dart';
+import 'package:todo_app_getx/screens/auth/profile/profile_controller.dart';
 import 'package:todo_app_getx/screens/auth/sign_in/sign_in_controller.dart';
 import 'package:todo_app_getx/screens/auth/sign_up/sign_up_controller.dart';
 import 'package:todo_app_getx/screens/complated/complated_controller.dart';
@@ -19,5 +20,6 @@ class HomeBinding extends Bindings {
     Get.lazyPut<ComplatedController>(() => ComplatedController());
     Get.lazyPut<TaskListController>(() => TaskListController());
     Get.lazyPut<TaskListViewController>(() => TaskListViewController());
+    Get.lazyPut<ProfileController>(() => ProfileController());
   }
 }

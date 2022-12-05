@@ -21,10 +21,17 @@ class CustomDialogWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      backgroundColor: Theme.of(context).splashColor,
       buttonPadding: EdgeInsets.symmetric(horizontal: 10.w, vertical: .0),
       contentPadding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 5.h),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28.w)),
-      title: Text(dialogName),
+      title: Text(
+        dialogName,
+        style: Theme.of(context)
+            .textTheme
+            .bodyMedium!
+            .copyWith(color: Theme.of(context).iconTheme.color),
+      ),
       content: TextField(
         controller: controller,
         decoration: InputDecoration(
@@ -33,7 +40,7 @@ class CustomDialogWidget extends StatelessWidget {
                 .textTheme
                 .bodySmall!
                 .copyWith(fontSize: 16.sp),
-            filled: true,
+            filled: false,
             fillColor: const Color(0xFFFAF9FB),
             border: UnderlineInputBorder(
                 borderSide:

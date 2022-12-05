@@ -8,17 +8,17 @@ class AppTheme {
   static AdaptiveThemeMode? currentSavedTheme = AdaptiveThemeMode.light;
 
   static final ThemeData whiteTheme = ThemeData(
-      backgroundColor: Colors.blue,
       primarySwatch: Colors.blue,
-      canvasColor: const Color(0xFFFF4875),
+      // canvasColor: const Color(0xFFFF4875),
       splashColor: Colors.white,
       primaryColor: const Color(0xFFB3A1F8),
+      iconTheme: const IconThemeData(color: Colors.black),
       textTheme: lightTextTheme);
   static final ThemeData darkTheme = ThemeData(
-      backgroundColor: Colors.red,
-      canvasColor: const Color(0xFFEC2D5B),
+      // canvasColor: const Color(0xFFEC2D5B),
       primaryColor: const Color(0xFF574699),
       splashColor: const Color(0xFF201F24),
+      iconTheme: const IconThemeData(color: Colors.white),
       textTheme: darkTextTheme);
 }
 

@@ -1,19 +1,19 @@
 import 'dart:developer';
 
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:todo_app_getx/data/dataprovider/fire_data_provider.dart';
 import 'package:todo_app_getx/data/models/task.dart';
 import 'package:todo_app_getx/data/models/task_list_model.dart';
+import 'package:todo_app_getx/utils/app_routing/constants.dart';
 
 class TaskListViewController extends GetxController {
-  final box = GetStorage();
+  final arguments = Get.arguments;
   final FireDataProvider fireStoreSrc = Get.find<FireDataProvider>();
   late final TaskBaseModel taskBase;
 
   @override
   void onInit() {
-    taskBase = TaskBaseModel.fromJson(box.read('task_base'));
+    taskBase = TaskBaseModel.fromJson(arguments['task_base']);
     log(taskBase.toString());
     super.onInit();
   }
@@ -21,8 +21,20 @@ class TaskListViewController extends GetxController {
   void changeFavourite({required Task task}) async {
     try {
       final isUpdated = await fireStoreSrc.updateTask(
-          task: task.copyWith(isFavourite: !task.isFavourite!));
+          task: task.copyWith(isFavourite: !task.isFavourite!),
+          collectionName: CollectionNames.generateSimpleTaskCollectionName(
+              name: task.taskListName!, id: task.taskListId!));
       if (isUpdated) {
+        if (!task.isFavourite!) {
+          final isFavouriteSaved = await fireStoreSrc.createTask(
+              task: task.copyWith(isFavourite: !task.isFavourite!),
+              collectionName: CollectionNames.importantCollectionName);
+        } else {
+          final isFavouriteDeleted = await fireStoreSrc.deleteTask(
+              task: task.copyWith(isFavourite: !task.isFavourite!),
+              collectionName: CollectionNames.importantCollectionName);
+        }
+
         Get.snackbar('${task.task}', 'task successfully updated');
       }
     } catch (e) {
@@ -34,12 +46,19 @@ class TaskListViewController extends GetxController {
   void changeComplated({required Task task, required bool isComplated}) async {
     try {
       final isUpdated = await fireStoreSrc.updateTask(
-          task: task.copyWith(isCompleted: isComplated));
+          task: task.copyWith(isCompleted: isComplated),
+          collectionName: CollectionNames.generateSimpleTaskCollectionName(
+              name: task.taskListName!, id: task.taskListId!));
 
-      final isComplatedSaved = await fireStoreSrc.createTaskComplated(
-          task: task.copyWith(isCompleted: isComplated));
-      if (isComplatedSaved) {
+      if (isComplated) {
         log('task Complated-------');
+        final isComplatedSaved = await fireStoreSrc.createTask(
+            task: task.copyWith(isCompleted: isComplated),
+            collectionName: CollectionNames.complatedCollectionName);
+      } else {
+        final isComplatedDeleted = await fireStoreSrc.deleteTask(
+            task: task.copyWith(isCompleted: isComplated),
+            collectionName: CollectionNames.complatedCollectionName);
       }
       if (isUpdated) {
         Get.snackbar('${task.task}', 'task successfully updated');
@@ -52,9 +71,17 @@ class TaskListViewController extends GetxController {
 
   void deleteTask({required Task task}) async {
     try {
-      final isDeleted = await fireStoreSrc.deleteTask(task: task);
+      final isDeleted = await fireStoreSrc.deleteTask(
+          task: task,
+          collectionName: CollectionNames.generateSimpleTaskCollectionName(
+              name: task.taskListName!, id: task.taskListId!));
       if (isDeleted) {
-        Get.snackbar('${task.task}', 'task successfully deleted');
+        final deletedFromCompleted = await fireStoreSrc.deleteTask(
+            task: task,
+            collectionName: CollectionNames.complatedCollectionName);
+        if (deletedFromCompleted) {
+          Get.snackbar('${task.task}', 'task successfully deleted');
+        }
       }
     } catch (e) {
       log(e.toString());

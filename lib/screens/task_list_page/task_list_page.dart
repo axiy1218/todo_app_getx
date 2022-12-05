@@ -45,13 +45,19 @@ class TaskListPage extends GetView<TaskListController> {
                     ],
                   ),
                 ),
-                body: const TabBarView(
-                  physics: NeverScrollableScrollPhysics(),
+                body: TabBarView(
+                  physics: const NeverScrollableScrollPhysics(),
                   children: [
                     //! To Do
-                    TaskListView(),
+                    const TaskListView(),
                     //! Complated
-                    ComplatedView()
+                    GetBuilder(
+                        init: controller,
+                        builder: (_) {
+                          return ComplatedView(
+                            taskBase: controller.taskBase,
+                          );
+                        })
                   ],
                 )),
           ),

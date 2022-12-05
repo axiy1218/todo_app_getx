@@ -1,4 +1,6 @@
 import 'package:get/route_manager.dart';
+import 'package:todo_app_getx/screens/auth/profile/profile_binding.dart';
+import 'package:todo_app_getx/screens/auth/profile/profile_view.dart';
 import 'package:todo_app_getx/screens/auth/sign_in/sign_in_view.dart';
 import 'package:todo_app_getx/screens/auth/sign_up/sign_up_binding.dart';
 import 'package:todo_app_getx/screens/auth/sign_up/sign_up_view.dart';
@@ -7,7 +9,7 @@ import 'package:todo_app_getx/screens/complated/complated_page.dart';
 import 'package:todo_app_getx/screens/home/home_binding.dart';
 import 'package:todo_app_getx/screens/home/home_view.dart';
 import 'package:todo_app_getx/screens/important/important_binding.dart';
-import 'package:todo_app_getx/screens/important/important_view.dart';
+import 'package:todo_app_getx/screens/important/important_page.dart';
 import 'package:todo_app_getx/screens/search/search_binding.dart';
 import 'package:todo_app_getx/screens/search/search_view.dart';
 import 'package:todo_app_getx/screens/task_list_page/task_list_binding.dart';
@@ -36,7 +38,7 @@ class AppRouting {
         binding: SearchBinding()),
     GetPage(
         name: AppRouteNames.important.route,
-        page: () => const ImportantView(),
+        page: () => const ImportantPage(),
         binding: ImportantBinding()),
     GetPage(
         name: AppRouteNames.complated.route,
@@ -50,6 +52,10 @@ class AppRouting {
         name: AppRouteNames.taskListView.route,
         page: () => const TaskListView(),
         binding: TaskListViewBinding()),
+    GetPage(
+        name: AppRouteNames.profile.route,
+        page: () => const ProfileView(),
+        binding: ProfileBinding()),
   ];
 }
 
@@ -60,4 +66,15 @@ enum TaskListEnum {
   final String name;
   final String id;
   const TaskListEnum({required this.name, required this.id});
+}
+
+class CollectionNames {
+  static final complatedCollectionName =
+      '${TaskListEnum.complated.name}_${TaskListEnum.complated.id}';
+  static String generateSimpleTaskCollectionName(
+          {required String name, required String id}) =>
+      '${name}_$id';
+
+  static final importantCollectionName =
+      '${TaskListEnum.important.name}_${TaskListEnum.important.id}';
 }

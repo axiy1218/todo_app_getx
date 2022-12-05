@@ -29,6 +29,7 @@ class CustomSliderWidget extends StatelessWidget {
     return Card(
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.w)),
+        color: Theme.of(context).splashColor,
         child: ClipRRect(
           child: Slidable(
             key: ValueKey<String>(sliderKey),
@@ -47,7 +48,13 @@ class CustomSliderWidget extends StatelessWidget {
             ),
             child: CheckboxListTile(
               value: isComplated,
-              title: Text(title),
+              title: Text(
+                title,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium!
+                    .copyWith(color: Theme.of(context).iconTheme.color),
+              ),
               subtitle: Text(time),
               controlAffinity: ListTileControlAffinity.leading,
               secondary: IconButton(
